@@ -1,7 +1,9 @@
-import Project from "../models/Project.model.js";
+import Projects from "../models/Project.model.js";
 import cloudinary from "../config/cloudinary.js";
 
 export const uploadProject = async (req, res) => {
+  console.log("inside uploadProject ");
+  
   try {
     const { title, description, tags, liveUrl, codeUrl } = req.body;
 
@@ -13,7 +15,7 @@ export const uploadProject = async (req, res) => {
       folder: "portfolio-projects",
     });
 
-    const project = await Project.create({
+    const project = await  Projects.create({
       title,
       description,
       tags: JSON.parse(tags),
@@ -28,5 +30,27 @@ export const uploadProject = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+
+
+export const getAllProjects = async (req, res) => {
+  console.log("inside getAllProjects");
+  
+  try {
+    const project = await Projects.find().sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      count: project.length,
+      project,
+    });
+  } catch (error) {
+    console.error("Get all projects error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch projects",
+    });
   }
 };
