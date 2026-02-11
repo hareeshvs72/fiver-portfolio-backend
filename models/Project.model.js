@@ -7,6 +7,7 @@ const projectSchema = new mongoose.Schema(
     tags: [String],
     liveUrl: String,
     codeUrl: String,
+    category:String,
     imageUrl: { type: String, required: true },
   },
   { timestamps: true }

@@ -5,7 +5,7 @@ export const uploadProject = async (req, res) => {
   console.log("inside uploadProject ");
   
   try {
-    const { title, description, tags, liveUrl, codeUrl } = req.body;
+    const { title, description, tags, liveUrl, codeUrl,category } = req.body;
 
     if (!req.file) {
       return res.status(400).json({ message: "Image is required" });
@@ -21,6 +21,7 @@ export const uploadProject = async (req, res) => {
       tags: JSON.parse(tags),
       liveUrl,
       codeUrl,
+      category,
       imageUrl: uploadResult.secure_url,
     });
 
