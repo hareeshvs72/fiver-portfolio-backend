@@ -9,8 +9,12 @@ connectDB();
 
 const app = express();
 
-app.use(cors( {origin: ["http://localhost:5173", "https://myportfolio.vercel.app"],}));
-app.use(express.json());
+app.use(
+  cors({
+    origin: "https://fiver-portfolio-frontend.vercel.app",
+    credentials: true,
+  })
+);app.use(express.json());
 
     app.use("/api/projects", projectRoutes);
 
