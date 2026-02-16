@@ -37,14 +37,17 @@ export const uploadProject = async (req, res) => {
 
 export const getAllProjects = async (req, res) => {
   console.log("inside getAllProjects");
-  
+
   try {
-    const project = await Projects.find().sort({ createdAt: -1 });
+    const projects = await Projects.find()
+      .select("title description imageUrl category tags liveUrl codeUrl createdAt")
+      .sort({ createdAt: -1 }) // Uses indexed field
+      .lean(); // 🔥 Faster - returns plain JS objects
 
     res.status(200).json({
       success: true,
-      count: project.length,
-      project,
+      count: projects.length,
+      projects,
     });
   } catch (error) {
     console.error("Get all projects error:", error);
